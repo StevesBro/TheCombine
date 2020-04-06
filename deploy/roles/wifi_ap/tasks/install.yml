@@ -75,8 +75,8 @@
   notify: Start create_ap
 
 - name: Setup create_ap service files
-  copy:
-    src: create_ap/create_ap.service
+  template:
+    src: create_ap.service.j2
     dest: /usr/lib/systemd/system/create_ap.service
     owner: root
     group: root
