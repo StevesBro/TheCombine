@@ -4,9 +4,6 @@
   hosts: nuc
   become: yes
 
-#  vars:
-#    config: production
-
   vars_files:
     - "vars/config_common.yml"
     - "vars/vault_config.yml"
@@ -48,10 +45,6 @@
       import_role:
         name: dotnet_core
 
-    # - name: setup combine user
-    #   import_role:
-    #     name: combine_user
-    #
     - name: configure front-end webserver
       import_role:
         name: apache_config
