@@ -1,0 +1,25 @@
+#########################################
+#
+# VARIABLES DEFINED HERE WILL NOT BE SEEN
+# BY THE IMPORTED ROLES, csf_install &
+# csf_config.
+#
+# To override variables for these roles,
+# they must be defined in the group, host,
+# or playbook vars files.
+#
+#########################################
+
+csf_required_packages:
+  - iptables
+  - perl
+  - unzip
+  - tar
+  - net-tools
+  - bind9-host
+  - libwww-perl
+  - liblwp-protocol-https-perl
+
+csf_install_post: False
+csf_reset_addl_service: []
+csf_strip_allow_regex: "\\*\\*\\* FOR CONFIG \\*\\*\\*"

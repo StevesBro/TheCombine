@@ -1,0 +1,41 @@
+---
+
+- name: disable 'ufw' firewall
+  service:
+    name: ufw
+    enabled: no
+    state: stopped
+  ignore_errors: true
+
+- name: Install Required Packages
+  package:
+    name: '{{ csf_required_packages }}'
+    state: present
+    update_cache: yes
+
+- name: Install ConfigServer Firewall
+  import_role:
+    name: csf_install
+
+- name: Configure ConfigServer Firewall
+  import_role:
+    name: csf_config
+
+- name: Remove config IPs from csf.allow
+  lineinfile:
+    dest: /etc/csf/csf.allow
+    regexp: "{{ csf_strip_allow_regex }}"
+    state: absent
+  notify:
+    - reload csf
+
+- name: Install post script
+  template:
+    src: csfpost.sh.j2
+    dest: /usr/local/csf/bin/csfpost.sh
+    owner: root
+    group: root
+    mode: 0700
+  when: install_csf_post|bool == True
+  notify:
+    - reload csf
