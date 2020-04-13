@@ -1,0 +1,5 @@
+#! /bin/bash
+
+{% for svc in csf_reset_addl_service %}
+systemctl is-active --quiet {{svc}} && systemctl restart {{svc}}
+{% endfor %}
