@@ -1,7 +1,7 @@
 ---
 #ConfigServer Firewall (csf) configuration items
 
-csf_install_post: True
+#csf_install_post: True
 csf_reset_addl_service:
   - create_ap
 
@@ -30,7 +30,10 @@ csf_config_ports:
     - 68
     - 5353
 
-csf_config_allow: "{{ lookup('lines', 'scripts/get-my-ips.pl') | from_json }}"
+csf_config_allow_comment: '=== FOR CONFIG ==='
+csf_get_ips_command: "scripts/get-my-ips.pl -c '{{ csf_config_allow_comment }}'"
+csf_config_allow: "{{ lookup('lines', csf_get_ips_command ) | from_json }}"
+#csf_config_allow: "{{ lookup('lines', 'scripts/get-my-ips.pl -c ===\\ FOR\\ CONFIG\\ ===' ) | from_json }}"
 # csf_config_allow:
 #   - ip: 10.0.0.32
 #     comment: '*** FOR CONFIG ***'

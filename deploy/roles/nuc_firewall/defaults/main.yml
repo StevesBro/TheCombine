@@ -22,4 +22,4 @@ csf_required_packages:
 
 csf_install_post: False
 csf_reset_addl_service: []
-csf_strip_allow_regex: "\\*\\*\\* FOR CONFIG \\*\\*\\*"
+csf_strip_allow_regex: "{{ csf_config_allow_comment | default('\\*\\*\\* FOR CONFIG \\*\\*\\*') }}"
