@@ -21,13 +21,15 @@
   import_role:
     name: csf_config
 
+- meta: flush_handlers
+
 - name: Remove config IPs from csf.allow
   lineinfile:
     dest: /etc/csf/csf.allow
     regexp: "{{ csf_strip_allow_regex }}"
     state: absent
   notify:
-    - reload csf
+    - restart csf
 
 - name: Install post script
   template:
@@ -36,6 +38,6 @@
     owner: root
     group: root
     mode: 0700
-  when: install_csf_post|bool == True
+  when: csf_install_post|bool == True
   notify:
-    - reload csf
+    - restart csf
