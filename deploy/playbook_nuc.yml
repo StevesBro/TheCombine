@@ -7,6 +7,7 @@
   vars_files:
     - "vars/config_common.yml"
     - "vars/vault_config.yml"
+    - "vars/csf.yml"
 
   tasks:
     - name: install packages to support Ansible playbooks
@@ -24,6 +25,10 @@
         path: "/root/.ssh/known_hosts"
         state: present
 
+    - name: setup ConfigServer Firewall
+      import_role:
+        name: nuc_firewall
+  
     - name: setup Let's Encrypt cert for nuc
       import_role:
         name: cert_sync_service
@@ -48,5 +53,3 @@
     - name: configure front-end webserver
       import_role:
         name: apache_config
-      tags:
-        - upgrade
